@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .do{
+            width: 400px;
+            height: 200px;
+            font-family: Arial Black, Gadget, sans-serif;
+            font-size: 25px;
+            font-weight: bolder;
+            color: white;
+            text-align: center;
+            background-color:  rgb(224, 224, 41);
+            border-radius: 20px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -100px;
+            margin-left: -200px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+        .sc{
+            display: flex;
+            width: 400px;
+            height: 70px;
+            justify-content: space-around;
+        }
+        .yes{
+            width: 70px;
+        }
+        .no{
+            height: 22.40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="do">
+        <div>你愿意嫁给我吗？<br></div>
+        <div class="sc">
+            <button class="yes">愿意</button>
+            <button class="no">不愿意</button>
+        </div>
+    </div>
+</body>
+<script>
+    var no=document.getElementsByClassName("no")[0];
+    var yes = document.getElementsByClassName("yes")[0];
+    var ranRight = parseInt(Math.random() * 300-200);
+    var ranBottom = parseInt(Math.random() * 300 - 200);
+    var flag=Math.floor(Math.random());
+    no.addEventListener("mouseover",function () {
+        no.style.position="absolute";
+        ranRight = parseInt(Math.random() * 300 - 200);
+        ranBottom = parseInt(Math.random() * 300 - 200);
+        flag = Math.floor(Math.random()+0.5);
+        if(flag==1){
+            no.style.width="20px";
+            no.style.height = "57px";
+        }else{ 
+            no.style.width = "44px";
+            no.style.height = "22.4px"}
+        console.log(flag);
+        no.style.right=ranRight+"px"; 
+        no.style.bottom = ranRight+"px";    
+    })
+    yes.addEventListener("click", function (){
+        alert("我也爱你");
+    })
+</script>
+</html>
