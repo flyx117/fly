@@ -15,11 +15,19 @@
     userpassword:<input type="password" id="userpassword" name="userpassword">
     <button>登录</button>
     <div></div>
+    <a href="https://flyx117.github.io/index2.html">游戏1</a>
+    <a href="https://flyx117.github.io/index.html">游戏2</a>
     <script>
+    var a=$("a");
+        $(function () {
+                a.hide();
+                console.log(1);
+        });
         $("button").click(function () {
             var name = $("#username").val();
             var pwd = $("#userpassword").val();
             var div = $("div");
+            var a = $("a");
             $.ajax({
                 url: "http://119.3.11.224:8080/login/login",
                 data: {
@@ -32,15 +40,19 @@
                     console.log(data);
                     div.html("");
                     div.append(data.errorMsg);
+                    a.show();
                 },
                 error: function (data) {
                     console.log(data);
-                    div.append(data.statusText)
+                    div.append(data.statusText);
+                    a.hide();
                 },
                 timeout: function (data) {
                     console.log(data);
+                    a.hide();
                 }
             })
+            $
         })
     </script>
 </body>
