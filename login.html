@@ -5,47 +5,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <title>login</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    username:<input type="text" id="username" name="username"><br>
-    userpassword:<input type="password" id="userpassword" name="userpassword">
+    用户名：<input type="text" id="username" name="username"><br>
+    密码：<input type="password" id="userpassword" name="userpassword"><br>
     <button>登录</button>
-    <div></div>
     <a href="https://flyx117.github.io/index2.html">游戏1</a>
     <a href="https://flyx117.github.io/index.html">游戏2</a>
+    <div></div>
     <script>
-    var a=$("a");
-        $(function () {
+        var a = $("a");
+            $(function () {
                 a.hide();
                 console.log(1);
-        });
+            });
         $("button").click(function () {
-            var name = $("#username").val();
+            var username = $("#username").val();
             var pwd = $("#userpassword").val();
+            // var key = $("#email").val();
+            var key = "6726a28c4020117d2443a23ece92a175";
             var div = $("div");
             var a = $("a");
             $.ajax({
-                url: "http://119.3.11.224:8080/login/login",
+                url: "https://api.apiopen.top/loginUser",
                 data: {
-                    username:name,
-                    userpassword:pwd
+                    name: username,
+                    passwd: pwd,
+                    apikey:key
                 },
                 type: "POST",
                 dataType: "JSON",
                 success: function (data) {
                     console.log(data);
                     div.html("");
-                    div.append(data.errorMsg);
+                    div.append(data.message);
                     a.show();
                 },
                 error: function (data) {
                     console.log(data);
-                    div.append(data.statusText);
+                    div.append(data.message);
                     a.hide();
                 },
                 timeout: function (data) {
@@ -53,7 +55,6 @@
                     a.hide();
                 }
             })
-            $
         })
     </script>
 </body>
