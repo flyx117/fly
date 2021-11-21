@@ -6,21 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>register</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+    <style>
+        .login {
+            background-color: whitesmoke;
+            position: absolute;
+            width: 600px;
+            height: 300px;
+            left: 50%;
+            top: 50%;
+            margin-top: -150px;
+            margin-left: -300px;
+            border-radius: 10px;
+        }
+    
+        .put {
+            background-color: rgb(219, 216, 216);
+            height: 220px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    用户名：<input type="text" id="username" name="username"><br>
-    密码：<input type="password" id="userpassword" name="userpassword"><br>
-    <button>注册</button><a href="https://flyx117.github.io/login.html">前往登录</a>
-    <div></div>
+    <div class=" login">
+            <div style="text-align: center;">
+                <h3>注册<small>拥有你的账号</small></h5>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 col-md-2"></div>
+                <div class="col-xs-12 col-md-8 put">
+                    <div class="form-group">
+                        <label for="username">用户名：</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="userpassword">密码：</label>
+                        <input type="password" class="form-control" id="userpassword" name="userpassword" placeholder="Password">
+                    </div>
+                    <div>
+                        <button class="btn btn-default center-block" id="register">注册</button>
+                        <a href="https://flyx117.github.io/login.html">前往登录</a>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-md-2"></div>
+            </div>        
+    </div>
     <script>
-        $("button").click(function () {
+        $("#register").click(function () {
             var username = $("#username").val();
             var pwd = $("#userpassword").val();
-            var key = "6726a28c4020117d2443a23ece92a175";
-            var div = $("div");
+            var key = "4e9c37f486b756161892bcf57e94b8cf";
+            var div = $("#console1");
             $.ajax({
                 url: "https://api.apiopen.top/registerUser",
                 data: {
@@ -32,12 +73,11 @@
                 dataType: "JSON",
                 success: function (data) {
                     console.log(data);
-                    div.html("");
-                    div.append(data.message);
+                    alert(data.message);
                 },
                 error: function (data) {
                     console.log(data);
-                    div.append(data.message)
+                    alert(data.message);
                 },
                 timeout: function (data) {
                     console.log(data);
@@ -46,5 +86,4 @@
         })
     </script>
 </body>
-
 </html>
