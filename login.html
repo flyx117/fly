@@ -11,16 +11,51 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <style>
+        body{
+				margin: 0px;
+        }
+        #overlay {
+            background: #000;
+            filter: alpha(opacity=50);
+            /* IE的透明度 */
+            opacity: 0.5;
+            /* 透明度 */
+            display: none;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            /* 此处的图层要大于页面 */
+            display: none;
+        }
+
+        #msg {
+            background-color: whitesmoke;
+            border-radius:10px ;
+            width: 500px;
+            height: 520px;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            display: none;
+            margin-top: -250px;
+            margin-left: -250px;
+            z-index: 101;
+            /* 此处的图层要遮盖层 */
+        }
         .login {
             background-color: whitesmoke;
             position: absolute;
             width: 600px;
-            height: 300px;
+            height: 320px;
             left: 50%;
             top: 50%;
-            margin-top: -150px;
+            margin-top: -160px;
             margin-left: -300px;
             border-radius: 10px;
+            /* z-index: 102; */
         }
         .link1{
             display: flex;
@@ -28,16 +63,73 @@
         }
         .put {
             background-color: rgb(219, 216, 216);
-            height: 230px;
+            height: 240px;
+            border-radius: 10px;
+        }
+        .put2{
+            background-color: rgb(219, 216, 216);
+            /* background: #00000180; */
+            height: 440px;
             border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
+    <div id="overlay"></div>
+    <div id="msg">
+        <button type="button" class="close pull-right" id="btn2" aria-label="Close" ><span aria-hidden="true" style="font-size: 40px;">&times;</span></button>
+        <div style="text-align: center;">
+            <h3>修改个人信息</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-md-2"></div>
+            <div class="col-xs-12 col-md-8 put2">
+                <br>
+                <div style="height: 380px; overflow: auto;">
+                <div class="form-group">
+                    <label for="username2">用户名*：</label>
+                    <input type="text" class="form-control" id="username2" name="username2" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">密码*：</label>
+                    <input type="password" class="form-control" id="userpassword2" name="userpassword2"
+                        placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">昵称：</label>
+                    <input type="text" class="form-control" id="s1" name="nikeName" placeholder="nikeName">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">手机：</label>
+                    <input type="text" class="form-control" id="s2" name="phone" placeholder="例:13888888888">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">邮箱：</label>
+                    <input type="email" class="form-control" id="s3" name="email" placeholder="例:123456@qq.com">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">vip等级：</label>
+                    <input type="text" class="form-control" id="s4" name="vipGrade" placeholder="例:6">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">个性签名：</label>
+                    <input type="text" class="form-control" id="s5" name="autograph" placeholder="例:没有个性，没有签名">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword2">备注：</label>
+                    <input type="text" class="form-control" id="s6" name="remarks" placeholder="例:这是一个备注，啦啦啦啦~">
+                </div>
+                <div>*表示必填</div>
+                </div>
+                <button class="btn btn-default center-block" id="change">修改</button>
+            </div>
+            <div class="col-xs-3 col-md-2"></div>
+        </div>
+    </div>
     <div class=" login">
         <div style="text-align: center;">
-            <h3>登录<small>开始你的账号</small></h5>
+            <h3>登录<small>开始你的账号</small></h3>
         </div>
         <div class="row">
             <div class="col-xs-3 col-md-2"></div>
@@ -54,24 +146,77 @@
                 </div>
                 <button class="btn btn-default center-block" id="login1">登录</button>
                 <div class="link1">
-                    <a href="https://flyx117.github.io/index2.html">游戏1</a>
-                    <a href="https://flyx117.github.io/index.html">游戏2</a>
+                    <a id="forget" class="pull-right" style="cursor:pointer">修改个人信息</a>
+                    <a class="game" href="https://flyx117.github.io/index2.html">游戏1</a>
+                    <a class="game" href="https://flyx117.github.io/index.html">游戏2</a>
                 </div>
             </div>
             <div class="col-xs-3 col-md-2"></div>
         </div>
     </div>
     <script>
-        var a = $("a");
+        var game = $(".game");
             $(function () {
-                a.hide();
+                game.hide();
                 console.log(1);
             });
+        $("#forget").click(function () {
+            var pageHeight = window.screen.availHeight;
+            var pageWidth = window.screen.availWidth;
+            $("#overlay").height(pageHeight);
+            $("#overlay").width(pageWidth);
+            // fadeTo第一个参数为速度，第二个为透明度
+            // 多重方式控制透明度，保证兼容性，但也带来修改麻烦的问题
+            $("#overlay").fadeTo(200, 0.5);
+            $("#msg").show();
+        })
+        $("#btn2").click(function () {
+            $("#overlay").fadeOut(200);
+            $("#msg").hide();
+        });
+        $("#change").click(function () {
+                var username2 = $("#username2").val();
+                var pwd2 = $("#userpassword2").val();
+                var key2 = "4e9c37f486b756161892bcf57e94b8cf";
+                var s1 = $("#s1").val();
+                var s2 = $("#s2").val();
+                var s3 = $("#s3").val();
+                var s4 = $("#s4").val();
+                var s5 = $("#s5").val();
+                var marks=$("#s6").val();
+                $.ajax({
+                    url: "https://api.apiopen.top/updateUserInfo",
+                    data: {
+                        nikeName: s1,
+                        phone:s2,
+                        email:s3, 
+                        vipGrade:s4,
+                        autograph:s5,
+                        remarks: marks,
+                        name: username2,
+                        passwd: pwd2,
+                        apikey: key2
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function (data) {
+                        console.log(data);
+                        alert(data.message);
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        alert(data.message);
+                    },
+                    timeout: function (data) {
+                        console.log(data);
+                    }
+                })
+            })
         $("#login1").click(function () {
             var username = $("#username").val();
             var pwd = $("#userpassword").val();
             var key = "4e9c37f486b756161892bcf57e94b8cf";
-            var a = $("a");
+            var game = $(".game");
             $.ajax({
                 url: "https://api.apiopen.top/loginUser",
                 data: {
@@ -85,16 +230,16 @@
                     console.log(data);
                     alert(data.message);
                     if(data.code==200){
-                    a.show();}
+                    game.show();}
                 },
                 error: function (data) {
                     console.log(data);
                     alert(data.message);
-                    a.hide();
+                    game.hide();
                 },
                 timeout: function (data) {
                     console.log(data);
-                    a.hide();
+                    game.hide();
                 }
             })
         })
