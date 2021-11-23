@@ -12,6 +12,40 @@
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
     <style>
+        body{
+				margin: 0px;
+        }
+        #overlay {
+            background: #000;
+            filter: alpha(opacity=50);
+            /* IE的透明度 */
+            opacity: 0.5;
+            /* 透明度 */
+            display: none;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            /* 此处的图层要大于页面 */
+            display: none;
+        }
+
+        #msg {
+            background-color: whitesmoke;
+            border-radius:10px ;
+            width: 500px;
+            height: 350px;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            display: none;
+            margin-top: -250px;
+            margin-left: -250px;
+            z-index: 101;
+            /* 此处的图层要遮盖层 */
+        }
         .login {
             background-color: whitesmoke;
             position: absolute;
@@ -22,47 +56,123 @@
             margin-top: -150px;
             margin-left: -300px;
             border-radius: 10px;
+            /* background: #00001080; */
         }
-    
+        #register{
+            color:#fff;
+            background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+        }
         .put {
             background-color: rgb(219, 216, 216);
-            height: 220px;
+            /* background: #00000180; */
+            height: 230px;
+            border-radius: 10px;
+        }
+        .put2{
+            background-color: rgb(219, 216, 216);
+            /* background: #00000180; */
+            height: 260px;
             border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
-    <div class=" login">
-            <div style="text-align: center;">
-                <h3>注册<small>拥有你的账号</small></h5>
-            </div>
-            <div class="row">
-                <div class="col-xs-3 col-md-2"></div>
-                <div class="col-xs-12 col-md-8 put">
-                    <br>
-                    <div class="form-group">
-                        <label for="username">用户名：</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <label for="userpassword">密码：</label>
-                        <input type="password" class="form-control" id="userpassword" name="userpassword" placeholder="Password">
-                    </div>
-                    <div>
-                        <button class="btn btn-default center-block" id="register">注册</button>
-                        <a href="https://flyx117.github.io/login.html">前往登录</a>
-                    </div>
+    <div id="overlay"></div>
+    <div id="msg">
+        <button class="pull-right" id="btn2">关闭</button>
+        <div style="text-align: center;">
+            <h3>反馈</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-md-2"></div>
+            <div class="col-xs-12 col-md-8 put2">
+                <br>
+                <div class="form-group">
+                    <label for="username2">请输入要反馈的内容：</label>
+                    <textarea class="form-control" rows="3" id="text1" name="text1" placeholder="Text"></textarea>
                 </div>
-                <div class="col-xs-3 col-md-2"></div>
-            </div>        
+                <div class="form-group">
+                    <label for="userpassword2">联系方式(邮件)：</label>
+                    <input type="email" class="form-control" id="contact" name="Contact way"
+                        placeholder="Contact way">
+                </div>
+                <button class="btn btn-default center-block" id="feedback">反馈</button>
+            </div>
+            <div class="col-xs-3 col-md-2"></div>
+        </div>
+    </div>
+    <div class=" login">
+        <div style="text-align: center;" >
+            <h3>注册<small>拥有你的账号</small></h5>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-md-2"></div>
+            <div class="col-xs-12 col-md-8 put">
+                <br>
+                <div class="form-group">
+                    <label for="username">用户名：</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword">密码：</label>
+                    <input type="password" class="form-control" id="userpassword" name="userpassword" placeholder="Password">
+                </div>
+                <div>
+                    <button class="btn btn-default center-block" id="register">注册</button>
+                    <a href="https://flyx117.github.io/login.html">前往登录</a>
+                    <a class="back pull-right" id="back" href="mailto:z1275472391@163.com?subject=flyx提醒&body=该更新密钥" title="需安装有邮件系统">
+                        如注册失败请点击这里</a>or<a style="cursor:pointer" id="comeback" title="请勿多次反馈">反馈</a>
+                </div>
+            </div>
+            <div class="col-xs-3 col-md-2"></div>
+        </div>        
     </div>
     <script>
+        $("#comeback").click(function () {
+                var pageHeight = window.screen.availHeight;
+                var pageWidth = window.screen.availWidth;
+                $("#overlay").height(pageHeight);
+                $("#overlay").width(pageWidth);
+                // fadeTo第一个参数为速度，第二个为透明度
+                // 多重方式控制透明度，保证兼容性，但也带来修改麻烦的问题
+                $("#overlay").fadeTo(200, 0.5);
+                $("#msg").show();
+            })
+            $("#btn2").click(function () {
+                $("#overlay").fadeOut(200);
+                $("#msg").hide();
+            });
+            $("#feedback").click(function () {
+                var text1 = $("#text1").val();
+                var contact = $("#contact").val();
+                var key2 = "4e9c37f486b756161892bcf57e94b8cf";
+                $.ajax({
+                    url: "https://api.apiopen.top/userFeedback",
+                    data: {
+                        text: text1,
+                        email: contact,
+                        apikey: key2
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function (data) {
+                        console.log(data);
+                        alert(data.message);
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        alert(data.message);
+                    },
+                    timeout: function (data) {
+                        console.log(data);
+                    }
+                })
+            })
         $("#register").click(function () {
             var username = $("#username").val();
             var pwd = $("#userpassword").val();
             var key = "4e9c37f486b756161892bcf57e94b8cf";
-            var div = $("#console1");
             $.ajax({
                 url: "https://api.apiopen.top/registerUser",
                 data: {
